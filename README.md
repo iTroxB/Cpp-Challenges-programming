@@ -1,4 +1,6 @@
-<center>![header](./img/C++mini.png)</center>
+<div align="center">
+  <img src="./img/C++mini.png">
+</div>
 
 # Retos de programación semanales 2023
 
