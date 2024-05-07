@@ -19,7 +19,7 @@ int main() {
     std::cout << "Tienes " << age << " años.\n";
     std::cout << "La referencia de age es " << age_ref << "\n";
 
-	age_ref = 15;
+    age_ref = 15;
     std::cout << "La nueva referencia de age es " << age_ref << "\n";
     std::cout << "La nueva edad es " << age << "\n";
 }
