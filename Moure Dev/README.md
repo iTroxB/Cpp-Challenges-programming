@@ -1,4 +1,4 @@
-![header](./img/header.jpg)
+![header](/img/header.jpg)
 
 # Retos de programación semanales 2023
 
