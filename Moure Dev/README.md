@@ -1,6 +1,6 @@
-![header](/img/header.jpg)
-
 # Retos de programación semanales 2023
+
+![header](/img/header.jpg)
 
 ### Proyecto de retos semanales de la comunidad MoureDev para practicar lógica de programación utilizando cualquier lenguaje.
 ### [Repo de Brais Moure con retos](https://github.com/mouredev/retos-programacion-2023)
