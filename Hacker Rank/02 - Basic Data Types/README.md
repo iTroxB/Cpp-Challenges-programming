@@ -1,4 +1,8 @@
-# Problem
+# 02 - Basic Data Types | Difficulty: Easy ✔
+
+<div align="center">
+  <img src="/img/C++mini.png">
+</div>
 
 - Some C++ data types, their format specifiers, and their most common bit widths are as follows:
 
