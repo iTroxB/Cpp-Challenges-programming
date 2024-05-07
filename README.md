@@ -1,4 +1,4 @@
-![header](./img/header.jpg)
+![header](./img/c++mini.png)
 
 # Retos de programación semanales 2023
 
