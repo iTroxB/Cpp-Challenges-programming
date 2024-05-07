@@ -1,6 +1,8 @@
-# 00. FIZZ BUZZ | Difficulty: Easy ✔
+# 01. FIZZ BUZZ | Difficulty: Easy ✔
 
-![c++](/img/C++mini.png)
+<div align="center">
+  <img src="/img/C++mini.png">
+</div>
 
 ### DESCRIPTION
 
