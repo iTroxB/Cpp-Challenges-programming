@@ -12,3 +12,4 @@ Repository with code of challenges solved with C++, in different platforms.
 | HackerRank | Say "Hello, World!" With C++ | **✔** |
 | HackerRank | Basic Data Types | **✔** |
 | HackerRank | Input and Output | **✔** |
+| HackerRank | Conditional Statements | **✔** |
