@@ -8,6 +8,5 @@ int main() {
     std::cout << (true && false) << "\n";
     std::cout << 'a' << "\n";
 
-
     return 0;
 }
