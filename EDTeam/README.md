@@ -152,6 +152,7 @@ int main() {
 }
 ```
 
+
 ## 5. Variables
 
 - Espacio dinámico en memoria que permite almacenar datos
@@ -227,6 +228,7 @@ int main() {
 }
 ```
 
+
 ## 6. Convertir tipos de datos
 
 - Al dividir 2 valores enteros, si el resultado es un decimal, solo se mostrará la parte entera.
@@ -275,6 +277,7 @@ int main() {
 }
 ```
 
+
 ## 7. Inferir tipos de datos
 
 - La inferencia de tipos es dejar que el compilador decida de que tipo es mi variable.
@@ -322,6 +325,7 @@ int main() {
 
 # II. Estructuras de decisión en C++
 
+
 ## 1. Ámbitos
 
 - Un ámbito en un bloque de código encapsulado entre llaves `{ }`, que posee un ciclo de vida independiente al de su exterior, en donde se ejecuta cierto flujo de código que solo existe y es válido dentro de este.
@@ -347,7 +351,7 @@ int main() {
 ```
 
 - La función **std::endl** o **endl** cumple la misma función de salto de línea que `\n`
-
+[]()
 
 ## 2. Condicionales
 
@@ -651,7 +655,7 @@ int main() {
 }
 ```
 
-## ## Ejercicio: Mejora Break the code
+## Ejercicio: Mejora Break the code
 
 ```C++
 #include <iostream>
@@ -781,6 +785,249 @@ int main() {
     param_by_ref(var);
     cout << "Var después de param_by_ref: " << var << endl;
     
+    return 0;
+}
+```
+
+## Ejercicio: Modularizar Break the code
+
+```C++
+#include <iostream>
+
+#include <cstdlib> // Permite entre otras cosas, generar números aleatorios
+using namespace std;
+
+void init(int& s, int& p) {
+    
+    srand(time(nullptr));
+    const int a = (rand() % 5) +1; // Para que no de 0 algún número
+    const int b = (rand() % 5) +1;
+    const int c = (rand() % 5) +1;
+    s = a + b + c;
+    p = a * b * c;
+    
+    cout << "Debes adivinar el código de tres números enteros\n";
+    cout << "La suma de los números es: " << s << "\n";
+    cout << "El producto de los números es: " << p << "\n";
+}
+
+
+int main() {
+
+    int sum;
+    int prod;
+
+    init(sum, prod);
+
+    int in_a;
+    int in_b;
+    int in_c;
+    int counter = 3;
+
+    do {
+        cout << "Introduzca el primer número: ";
+        cin >> in_a;
+        cout << "Introduzca el segundo número: ";
+        cin >> in_b;
+        cout << "Introduzca el tercer número: ";
+        cin >> in_c;
+
+        int in_sum = in_a + in_b + in_c;
+        int in_prod = in_a * in_b * in_c;
+
+        if (in_sum == sum && in_prod == prod){
+            cout << "El código introducido es correcto\n";
+            break;
+        } else {
+            counter--;
+
+            cout << "El código introducido es incorrecto";
+            if (counter > 0) {
+                cout << ", intente denuevo.\n";
+            } else {
+                cout << ".\n";
+            }
+
+            cout << "Le quedan " << counter << " oportunidad";
+            if (counter == 1) {
+                cout << ".\n";
+            } else {
+                cout << "es.\n";
+            }
+        }
+    } while (counter > 0);
+
+    if (counter == 0) {
+        cout << "Has perdido\n";
+    } else {
+        cout << "Has ganado\n";
+    }
+
+    return 0;
+}
+```
+
+## 3. Funciones anónimas
+
+- Una función anónima refiere un bloque de código que solo se utiliza una vez, la cual puede ser llamada desde otra función para realizar una tarea específica.
+- A través de la palabra clave **auto** se define como una variable convencional.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+    auto sum = [] (int a, int b) {
+        int result = a + b;
+        // return a + b;
+        return result;
+    };
+
+    cout << "5 + 3 = " << sum(5, 3) << endl;
+    return 0;
+}
+```
+
+- En los corchetes le puedo asignar una función que capture el entorno, para ingresar otra función que por ejemplo imprima el mensaje.
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+    auto sum = [] (int a, int b) {
+        int result = a + b;
+        // return a + b;
+        return result;
+    };
+
+    int result = sum(5,3);
+    
+    auto print_result = [result] () {
+        cout << "5 + 3 = " << result << endl;
+    };
+
+    print_result();
+
+    return 0;
+}
+```
+
+- Tambien se puede capturar el entorno completo desde la función anónima
+
+```C++
+#include <iostream>
+using namespace std;
+
+int main() {
+    auto sum = [] (int a, int b) {
+        int result = a + b;
+        // return a + b;
+        return result;
+    };
+
+    int x = 5;
+    int y = 3;
+
+    auto use_sum_and_print_result = [sum, x, y] () {
+        cout << x << " + " << y << " = " << sum(x, y) << endl;
+    };
+
+    use_sum_and_print_result();
+
+    return 0;
+}
+```
+
+## 4. Agrupando funciones en espacios de nombres
+
+- Se puede dar la situación en donde creemos una función que ya exista en la librería estándar de C++ ó en una librería de terceros que estemos utilizando y nos genere conflicto.
+- Para garantizar que nuestras funciones sean únicas se utiliza el concepto de **espacio de nombres**.
+- Es muy similar a utilizar módulos (utilizar `std::cout` implica que la variable `cout` está dentro de un espacio de nombre llamado `std`)
+- Siempre utilizar el espacio de nombre directo sobre la variable y no general sobre el programa.
+
+```C++
+//use namespace std;
+...SNIP...
+	std::cout << "Hello!" << endl;
+...
+```
+
+- Un espacio de nombre sirve para agrupar conceptos fundamentales dentro de un programa en particular.
+- Se definen a través de la palabra clave **namespace**
+
+```C++
+#include <iostream>
+
+namespace Math {
+    int sum(int a, int b) {
+
+        return a + b;
+    }
+
+    int abs(int x) {
+
+        if (x < 0) {
+            return -x;
+        } else {
+            return x;
+        }
+    }
+}
+
+int main() {
+
+    std::cout << "5 + 3 = " << Math::sum(5, 3) << "\n";
+    std::cout << "|-5| = " << Math::abs(-5) << "\n";
+    return 0;
+}
+```
+
+## 5. Anidando espacios de nombres
+
+- La anidación de espacios de nombre se refiere a un espacio padre que albergue mucho espacios hijos, y así sucesivamente.
+
+```C++
+#include <iostream>
+
+namespace myNamespace {
+
+    int increment(int x) {
+        return x + 1;
+    }
+
+    namespace Math {
+        int sum(int a, int b) {
+            return a + b;
+        }
+
+        int abs(int x) {
+            if (x < 0) {
+                return -x;
+            } else {
+                return x;
+            }
+        }
+    }
+
+    namespace Output {
+        void print_hello_world() {
+            
+            std::cout << "Hello, World! \n";
+        }
+
+        void greet(const char* name) {
+            std::cout << "Hello " << name << "!\n";
+        }
+    }
+}
+
+int main() {
+
+    std::cout << "5 + 1 = " << myNamespace::increment(5) << "\n";
+    myNamespace::Output::greet("Javier");
+    std::cout << "9 + 1 = " << myNamespace::Math::sum(9, 1) << "\n";
+
     return 0;
 }
 ```
