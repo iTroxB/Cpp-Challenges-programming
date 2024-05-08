@@ -1031,3 +1031,97 @@ int main() {
     return 0;
 }
 ```
+
+## 6. Creación de bibliotecas para C++
+
+- Creación de archivos de cabecera **.hpp**.
+- Para crear una cabecera, se comienza por declarar una directiva de preprocesador, la cual se encarga de que, indirectamente las veces que se llame desde diferentes partes del programa, esta solo se incorpore una sola vez, dando estabilidad y disponibilidad inmediata.
+- Esta directiva se llama **ifndef** (If Not Defined)
+- Al ser una definición booleana, la primera vez en procesar lee el fichero ya que la respuesta es True. En las demás ocasiones no, ya que al ya leerlo la primera vez, el if se vuelve falso y lo anula.
+- Dentro del bloque de código, al definir una función, esta no se define por completo, si no que solamente se define la interfaz de esta.
+- Se diferencia entre declarar la función (sin valores asignados pero si tipo de dato) y definir la función (con tipo de dato y valor asignado).
+- En el archivo **.hpp** solo de fine la declaración de la función. La definición del cuerpo de al función se declara en un archivo **.cpp** de nombre como el `namespace`. (Si el namespace se llama `Math`, el archivo fuente de la cabecera se debe llamar `math.cpp`)
+
+- `math.hpp`
+
+```C++
+#ifndef MATH_H
+#define MATH_H
+
+namespace Math {
+
+    int sum(int, int);
+    int abs(int);
+}
+#endif
+```
+
+- `math.cpp`
+
+```C++
+#include <iostream>
+#include "math.hpp"
+
+namespace Math {
+
+    int sum(int x, int y) {
+        return x + y;
+    }
+
+    int abs(int x) {
+        if (x < 0) {
+            return -x;
+        } else {
+            return x;
+        }
+    }
+}
+```
+
+- `06_headers.cpp` -> principal file
+
+```C++
+#include <iostream>
+#include "math.hpp"
+
+int main() {
+
+    std::cout << "5 + 3 = " << Math::sum(5, 3) << "\n";
+    std::cout << "|-5| = " << Math::abs(-5) << "\n";
+    return 0;
+}
+```
+
+- Al compilar `06_headers.cpp` la primera vez arrojará un error:
+
+```shell
+bash> g++ 06_headers.cpp -o headers
+/usr/bin/ld: /tmp/cczxVYa9.o: in function `main':
+06_headers.cpp:(.text+0x30): undefined reference to `Math::sum(int, int)'
+/usr/bin/ld: 06_headers.cpp:(.text+0x75): undefined reference to `Math::abs(int)'
+collect2: error: ld returned 1 exit status
+```
+
+- Esto se presenta debido a que no conoce el contenido del fichero `math.cpp`. Para solucionar esto, `math.cpp` se debe compilar de una forma especial, de la cual se obtiene un compilado con extensión `.o`.
+
+```shell
+bash> g++ -c math.cpp
+bash> ls -ls
+
+4 -rw-r--r-- 1 user user 2232 data day 18:30 math.o
+```
+
+- Si al comando se le agrega la flag -o se puede definir el nombre del fichero .o
+
+```shell
+bash> g++ -c math.cpp -o hola.o
+bash> ls -ls
+
+4 -rw-r--r-- 1 user user 2232 data day 18:31 hola.o
+```
+
+- Para compilar el archivo principal, se debe incorporar a la compilación el fichero `.o` compilado recientemente.
+
+```shell
+bash> g++ 06_headers.cpp -o headers math.o
+```
